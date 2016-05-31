@@ -66,9 +66,9 @@ class MemberController extends PlateformController {
                 if ($member_model->checkLogin()) {
                     if($from = session('from')){
                         session('from',null);
-                        $this->redirect($from);
+                        redirect($from);
                     }else{
-                        $this->redirect('/');
+                        redirect('/');
                     }
                     exit;
                 }
