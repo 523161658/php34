@@ -1,0 +1,39 @@
+<Layout name="Layout/header_footer" />
+<div class="form-div">
+    <img src="/Application/Admin/Public/Images/icon_search.gif" width="26" height="22" border="0" alt="search" />
+    商品类型：
+    <select name="type_id" onchange="location.href='__ACTION__/type_id/'+this.value">
+        <volist name="type" id="vo">
+            <option value="{$vo.id}" <if condition="$Think.get.type_id eq $vo['id']">selected="selected"</if> >{$vo.type_name}</option>
+        </volist>
+    </select>
+</div>
+<!-- 列表 -->
+<div class="list-div" id="listDiv">
+    <table cellpadding="3" cellspacing="1">
+        <tr>
+            <th >属性名称</th>
+            <th >属性的类型</th>
+            <th >属性的可选值</th>
+            <th >所在的类型</th>
+            <th width="60">操作</th>
+        </tr>
+        <volist name="data" id="vo">         
+        <tr class="tron">
+            <td>{$vo.attr_name}</td>
+            <td>{$vo['attr_type']=='0'?'唯一':'可选'}</td>
+            <td>{$vo['attr_option_values']==''?'无可选值':$vo['attr_option_values']}</td>
+            <td>{$vo['type_name']}</td>
+            <td align="center">
+                <a href="__CONTROLLER__/edit?attr_id={$vo['id']}&p={$Think.get.p|default=1}&type_id={$Think.get.type_id|default=1}" title="编辑">编辑</a> |
+                <a href="__CONTROLLER__/delete?attr_id={$vo['id']}&p={$Think.get.p|default=1}&type_id={$Think.get.type_id|default=1}" onclick="return confirm('确定要删除吗？');" title="移除">移除</a> 
+            </td>
+        </tr>
+        </volist> 
+        <?php if(preg_match('/\d/', $page)): ?>  
+        <tr><td align="right" nowrap="true" colspan="99" height="30"><?php echo $page; ?></td></tr> 
+        <?php endif; ?> 
+    </table>
+</div>
+<script>
+</script>

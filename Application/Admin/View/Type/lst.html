@@ -1,0 +1,25 @@
+<Layout name="Layout/header_footer" />
+<!-- 列表 -->
+<div class="list-div" id="listDiv">
+    <table cellpadding="3" cellspacing="1">
+        <tr>
+            <th >类型名称</th>
+            <th width="150">操作</th>
+        </tr>
+        <volist name='data' id='vo'>
+        <tr class="tron">
+            <td>{$vo['type_name']}</td>
+            <td align="center">
+                <a href="__MODULE__/Attribute/lst/type_id/{$vo.id}/p/{$Think.get.p|default=1}" >属性列表</a> |
+                <a href="__MODULE__/Type/edit/type_id/{$vo['id']}/p/{$Think.get.p|default=1}" title="编辑">编辑</a> |
+                <a href="__MODULE__/Type/delete/type_id/{$vo['id']}/p/{$Think.get.p|default=1}" onclick="return confirm('确定要删除吗？');" title="移除">移除</a> 
+            </td>
+        </tr>
+        </volist>
+        <?php if(preg_match('/\d/', $page)): ?>  
+        <tr><td align="right" nowrap="true" colspan="99" height="30"><?php echo $page; ?></td></tr> 
+        <?php endif; ?> 
+    </table>
+</div>
+<script>
+</script>

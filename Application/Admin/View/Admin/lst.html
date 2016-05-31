@@ -1,0 +1,51 @@
+<Layout name="Layout/header_footer" />
+<!-- 列表 -->
+<div class="list-div" id="listDiv">
+    <table cellpadding="3" cellspacing="1">
+        <tr>
+            <th >账号</th>
+            <th >是否启用</th>
+            <th >拥有角色</th>
+            <th width="60">操作</th>
+        </tr>
+        <volist name='data' id="vo">         
+            <tr class="tron">
+                <td>{$vo['username']}</td>
+                <td class="isuse" admin_id = {$vo.id} >{$vo['is_use'] == '1' ? 启用:禁用}</td>
+                <td><if condition="$vo.id eq 1">超级管理员<else/>{$vo.role_name|str_replace=',' ,  '&nbsp;&nbsp;'  ,###}</if></td>
+            <td align="center">
+                <a href="__CONTROLLER__/edit?id={$vo.id}&p={$Think.get.p|default=1}" title="编辑">编辑</a> |
+            <if condition="$vo.id eq 1">
+                <SPAN style="color:gray;">移除</SPAN>
+                <else/>
+                <a href="__CONTROLLER__/delete?id={$vo.id}&p={$Think.get.p|default=1}" onclick="return confirm('确定要删除吗？');" title="移除">移除</a>
+            </if>
+            </td>
+            </tr>
+        </VOLIST>
+        <?php if(preg_match('/\d/', $page)): ?>  
+        <tr><td align="right" nowrap="true" colspan="99" height="30"><?php echo $page; ?></td></tr> 
+        <?php endif; ?> 
+    </table>
+</div>
+<script>
+    $(".isuse").click(function () {
+        var admin_id = $(this).attr('admin_id');
+        if(admin_id === '1'){
+            alert('超级管理员无法修改！');
+            return false;
+        }
+        var _issue = $(this);
+        $.ajax({
+            type: "get",
+            url:  "<?php echo U('updateIsuse','',false) ?>/id/" + admin_id,
+            success: function(msg){
+                if(msg === '1'){
+                    _issue.html('启用');
+                }else{
+                    _issue.html('禁用');
+                }
+            }
+        });
+    });
+</script>

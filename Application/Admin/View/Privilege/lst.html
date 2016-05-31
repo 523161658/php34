@@ -1,0 +1,29 @@
+<Layout name="Layout/header_footer" />
+<!-- 列表 -->
+<div class="list-div" id="listDiv">
+    <table cellpadding="3" cellspacing="1">
+        <tr>
+            <th >权限名称</th>
+            <th >模块名称</th>
+            <th >控制器名称</th>
+            <th >方法名称</th>
+            <th >上级权限</th>
+            <th width="60">操作</th>
+        </tr>
+        <volist name='data' id="vo">       
+            <tr class="tron">
+                <td>{$vo.level|str_repeat='/----',###}{$vo.pri_name}</td>
+                <td>{$vo.module_name}</td>
+                <td>{$vo.controller_name}</td>
+                <td>{$vo.action_name}</td>
+                <td>{$vo.parent_name}</td>
+                <td align="center">
+                    <a href="__CONTROLLER__/edit?id={$vo.id}&p={$Think.get.p|default=1}" title="编辑">编辑</a> |
+                    <a href="__CONTROLLER__/delete?id={$vo.id}&p={$Think.get.p|default=1}" onclick="return confirm('确定要删除吗？');" title="移除">移除</a> 
+                </td>
+            </tr>
+        </volist> 
+    </table>
+</div>
+<script>
+</script>

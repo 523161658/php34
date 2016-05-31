@@ -1,0 +1,77 @@
+<layout name="Layout/header_footer" />
+<div class="main-div">
+    <form name="main_form" method="POST" action="__SELF__" enctype="multipart/form-data">
+        <table cellspacing="1" cellpadding="3" width="100%">
+            <tr>
+                <td class="label">角色名称：</td>
+                <td>
+                    <input  type="text" name="role_name" value="" />
+                </td>
+            </tr>
+            <tr>
+                <td class="label">权限列表：</td>
+                <td>
+            <volist name='privilege' id="vo">
+                {$vo.level|str_repeat='/——',###}<input type="checkbox" name="pri_id[]" value="{$vo.id}" level="{$vo.level}" />{$vo.pri_name}<br />
+            </volist>
+            </td>
+            </tr>
+            <tr>
+                <td colspan="99" align="center">
+                    <input type="submit" class="button" value=" 确定 " />
+                    <input type="reset" class="button" value=" 重置 " />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+    $(function () {
+        // 禁止表单重复提交
+        $(':submit').click(function(){
+            $(this).attr('disabled',"disabled");
+            $("form[name=main_form]").submit();
+        });
+        // 权限列表智能勾选
+        $(':checkbox').click(function () {
+            //获得当前level
+
+            var cur_level = $(this).attr('level');
+            var temp_level = cur_level;
+            // 判断，如果是选中
+            if ($(this).attr('checked')) {
+                // 获取所有之前的选中内容
+                var prevAll = $(this).prevAll(':checkbox');
+                // 循环所有之前的选中内容
+                $(prevAll).each(function (k, v) {
+                    //判断，如果选中的内容
+                    if ($(v).attr('level') < temp_level) {
+                        temp_level--;
+                        $(v).attr('checked', 'checked');
+                    }
+                });
+
+                //获取所有之后的选中内容
+                var nextAll = $(this).nextAll(':checkbox');
+                $(nextAll).each(function (k, v) {
+                    if ($(v).attr('level') > cur_level) {
+                        $(v).attr('checked', 'checked');
+                    } else {
+                        return false;
+                    }
+                });
+            } else {
+                // 判断，如果是取消
+                var nextAll = $(this).nextAll(':checkbox');
+                $(nextAll).each(function (k, v) {
+                    if ($(v).attr('level') > cur_level) {
+                        $(v).removeAttr('checked');
+                    } else {
+                        return false;
+                    }
+                });
+            }
+        });
+    });
+
+</script>

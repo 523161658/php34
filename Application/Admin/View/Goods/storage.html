@@ -1,0 +1,57 @@
+<layout name="Layout/header_footer" />
+<div class="list-div" id="listDiv">
+        <form name="storage" method="POST" action="__SELF__" >
+            <table cellspacing="1" cellpadding="3" width="100%" class="table_content">
+                <tr>
+                <volist name="data" id="vo">
+                    <th>{$vo['attr_name']}</th>
+                </volist>
+                    <th width='120'>库存量</th>
+                    <th width='80'>操作</th>
+                </tr>
+                <volist name="goods_number_list"  id="v1" key='k'>
+                <tr>
+                    <volist name="data" id="vo">
+                    <td align="center">
+                        <select name="goods_attr_id[]">
+                            <option value="">-请选择-</option>
+                            <volist name="vo.attr_value" id="vv">
+                                <option value="{$key}" <in name="key" value="$v1['goods_attr_id']" >selected="selected"</in> >{$vv}</option>
+                            </volist>
+                        </select>
+                    </td>
+                    </volist>
+                <td width='120' align="center">
+                    <input type="text" name="goods_number[]" size='10' value="{$v1['goods_number']}"></td>
+                <td width='80' align="center"><input type='button' <if condition="$k eq 1">value="+"<else/>value="-"</if> onclick="addnew(this)"></td>
+                </tr>
+                </volist>
+            </table>
+
+            <table cellspacing="1" cellpadding="3" width="100%">
+                <tr>
+                    <td colspan="99" align="center">
+                        <input type="submit" class="button" value=" 确定 " />
+                        <input type="reset" class="button" value=" 重置 "  />
+                    </td>
+                </tr>
+            </table>
+        </form>
+</div>
+<script>
+    function addnew(a) {
+        var tr = $(a).parent().parent();
+        if ($(a).val() === '+') {
+            var newtr = tr.clone();
+            // 改变图标
+            newtr.find(':button').val('-');
+            // 去掉属性值
+            newtr.find(':text').val('');
+            newtr.find('option').prop('selected',false);
+            
+            tr.after(newtr);
+        } else {
+            tr.remove();
+        }
+    }
+</script>

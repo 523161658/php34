@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+        <title>{$title}</title>
+        <meta name="description" content="{$description}">
+        <meta name="Keywords" content="{$keywords}">
+        <link rel="stylesheet" href="/Public/style/base.css" type="text/css">
+        <link rel="stylesheet" href="/Public/style/global.css" type="text/css">
+        <link rel="stylesheet" href="/Public/style/header.css" type="text/css">
+        <volist name="css" id="vo">
+            <link rel="stylesheet" href="/Public/style/{$vo}.css" type="text/css">
+        </volist>
+        <link rel="stylesheet" href="/Public/style/bottomnav.css" type="text/css">
+        <link rel="stylesheet" href="/Public/style/footer.css" type="text/css">
+
+        <script type="text/javascript" src="/Public/js/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="/Public/js/header.js"></script>
+        <volist name="js" id="vo">
+            <script type="text/javascript" src="/Public/js/{$vo}.js"></script>
+        </volist>
+    </head>
+    <body>
+        <!-- 顶部导航 start -->
+        <div class="topnav">
+            <div class="topnav_bd w1210 bc">
+                <div class="topnav_left">
+
+                </div>
+                <div class="topnav_right fr">
+                    <ul>
+                        <li id="loginfo"></li>
+                        <li class="line">|</li>
+                        <li>我的订单</li>
+                        <li class="line">|</li>
+                        <li>客户服务</li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- 顶部导航 end -->
+
+        <div style="clear:both;"></div>
+
+
+
+        {__CONTENT__}
+
+
+        <!-- 底部版权 start -->
+        <div class="footer w1210 bc mt10">
+            <p class="links">
+                <a href="">关于我们</a> |
+                <a href="">联系我们</a> |
+                <a href="">人才招聘</a> |
+                <a href="">商家入驻</a> |
+                <a href="">千寻网</a> |
+                <a href="">奢侈品网</a> |
+                <a href="">广告服务</a> |
+                <a href="">移动终端</a> |
+                <a href="">友情链接</a> |
+                <a href="">销售联盟</a> |
+                <a href="">京西论坛</a>
+            </p>
+            <p class="copyright">
+                © 2005-2013 京东网上商城 版权所有，并保留所有权利。  ICP备案证书号:京ICP证070359号 
+            </p>
+            <p class="auth">
+                <a href=""><img src="/Public/images/xin.png" alt="" /></a>
+                <a href=""><img src="/Public/images/kexin.jpg" alt="" /></a>
+                <a href=""><img src="/Public/images/police.jpg" alt="" /></a>
+                <a href=""><img src="/Public/images/beian.gif" alt="" /></a>
+            </p>
+        </div>
+        <!-- 底部版权 end -->
+    </body>
+</html>
+<script>
+    $.ajax({
+        type: "get",
+        url: '/home/member/getLoginInfo',
+        dataType: "json",
+        success: function(info){
+            var html = '';
+            if(info['is_login'] === '1'){
+                html = "您好，" + info['email'] + "！[<a href='{:U('home/member/loginout')}'>退出</a>]";
+            }else{
+                html = "您好，欢迎来到京西！[<a href='{:U('home/goods/login')}'>登录</a>] [<a href='{:U('home/member/regist')}'>免费注册</a>]";
+            }
+            $('#loginfo').html(html);
+        }
+    });
+</script>

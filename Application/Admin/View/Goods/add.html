@@ -1,0 +1,336 @@
+<layout name="Layout/header_footer" />
+<div class="tab-div">
+    <div id="tabbar-div">
+        <p>
+            <span class="tab-front">基本信息</span>
+            <span class="tab-back">商品描述</span>
+            <span class="tab-back">会员价格</span>
+            <span class="tab-back">商品属性</span>
+            <span class="tab-back">商品相册</span>
+        </p>
+    </div>
+    <div id="tabbody-div">
+        <form name="main_form" method="POST" action="__SELF__" enctype="multipart/form-data">
+            <table cellspacing="1" cellpadding="3" width="100%" class="table_content">
+                <tr>
+                    <td class="label">商品名称：</td>
+                    <td>
+                        <input  type="text" name="goods_name" value="" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">商品分类：</td>
+                    <td>
+                        <select name="cat_id">
+                            <option value="">选择分类</option>
+                            <volist name='cat_list' id='vo'>
+                                <option value="{$vo.id}">{$vo.level|str_repeat='/---',###}{$vo.cat_name}</option>
+                            </volist>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">扩展分类：</td>
+                    <td>
+                        <input type="button" value="添加" name="add" onclick="addcat(this)" />
+                        <span>
+                        <select name="ext_cat_id[]">
+                            <option value="">选择分类</option>
+                            <volist name='cat_list' id='vo'>
+                                <option value="{$vo.id}" >{$vo.level|str_repeat='/---',###}{$vo.cat_name}</option>
+                            </volist>
+                        </select>&nbsp;
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">品牌：</td>
+                    <td>
+                        <select name="brand_id">
+                            <option value="">选择品牌</option>
+                            <volist name='brand_list' id='vo'>
+                                <option value="{$vo.id}">{$vo.brand_name}</option>
+                            </volist>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">市场价：</td>
+                    <td>
+                        <input  type="text" name="market_price" value="0.00" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">本店价：</td>
+                    <td>
+                        <input  type="text" name="shop_price" value="0.00" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">赠送积分：</td>
+                    <td>
+                        <input  type="text" name="jifen" value="" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">赠送经验值：</td>
+                    <td>
+                        <input  type="text" name="jyz" value="" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">如果要用积分兑换，需要的积分数：</td>
+                    <td>
+                        <input  type="text" name="jifen_price" value="" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label"><input type="checkbox"  value="1" name="is_promote" onclick="check_is_promoto(this)" />促销价：</td>
+                    <td>
+                        <input  class="promote_price" disabled="disabled" type="text" name="promote_price" value="0.00" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">促销开始时间：</td>
+                    <td>
+                        <input class="promote_price" disabled="disabled" id="promote_start_time" type="text" name="promote_start_time" value="" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">促销结束时间：</td>
+                    <td>
+                        <input class="promote_price" disabled="disabled" id="promote_end_time" type="text" name="promote_end_time" value="" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">logo原图：</td>
+                    <td>
+                        <input type="file" name="logo" /> 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">是否热卖：</td>
+                    <td>
+                        <input type="radio" name="is_hot" value="1"  />是 
+                        <input type="radio" name="is_hot" value="0" checked="checked" />否 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">是否新品：</td>
+                    <td>
+                        <input type="radio" name="is_new" value="1"  />是 
+                        <input type="radio" name="is_new" value="0" checked="checked" />否 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">是否精品：</td>
+                    <td>
+                        <input type="radio" name="is_best" value="1"  />是 
+                        <input type="radio" name="is_best" value="0" checked="checked" />否 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">是否上架：</td>
+                    <td>
+                        <input type="radio" name="is_on_sale" value="1"  />上架 
+                        <input type="radio" name="is_on_sale" value="0" checked="checked" />下架 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">seo优化:搜索引擎【百度、谷歌等】优化关键字：</td>
+                    <td>
+                        <input  type="text" size="60" name="seo_keyword" value="" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">seo优化:搜索引擎【百度、谷歌等】优化描述：</td>
+                    <td>
+                        <input  type="text" size="60" name="seo_description" value="" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">排序数字：</td>
+                    <td>
+                        <input  type="text" name="sort_num" value="100" />
+                    </td>
+                </tr>
+
+            </table>
+            <!--商品描述-->
+            <table cellspacing="1" cellpadding="3" width="100%" class="table_content" style="display:none;">
+                <tr>
+                    <td>
+                        <textarea id="goods_desc" name="goods_desc"></textarea>
+                    </td>
+                </tr>
+            </table>
+            <!--会员价格-->
+            <table cellspacing="1" cellpadding="3" width="100%" class="table_content" style="display:none;">
+                <volist name="ml_list" id="vo">
+                    <tr>
+                        <td class="label">{$vo.level_name}：</td>
+                        <td class="content">￥<input size="8" type="text" name="member_price[{$vo.id}]" onblur="if($(this).val() !== '-1') $(this).parent('td').next('td').children('input').prop('checked',false); else $(this).parent('td').next('td').children('input').prop('checked',true);">元</td>
+                        <td class="label_left"><input type="radio" onclick="disabledMemberPrice(this)">按折扣率{$vo.rate}%自动计算价格。</td>
+                    </tr>
+                </volist>
+            </table>
+            <!--商品属性-->
+            <table id="attr_content" cellspacing="1" cellpadding="3" width="100%" class="table_content" style="display:none;">
+                <tr>
+                    <td class="label">商品类型：</td>
+                    <td>
+                        <select name="type_id">
+                            <option value="">---请选择商品类型---</option>
+                            <volist name="type_list" id="vo">
+                                <option value="{$vo.id}">{$vo.type_name}</option>
+                            </volist>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <!--商品相册-->
+            <table cellspacing="1" cellpadding="3" width="100%" class="table_content" style="display:none;">
+                <tr>
+                    <td><a onclick="addFile($(this));">[+]</a> <input type="file" name="pics[]"></td>
+                </tr>
+            </table>
+            <table cellspacing="1" cellpadding="3" width="100%">
+                <tr>
+                    <td colspan="99" align="center">
+                        <input type="submit" class="button" value=" 确定 " />
+                        <input type="reset" class="button" value=" 重置 " />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<script>
+    // tab标签切换
+    $("div#tabbar-div p span").click(function () {
+        var i = $(this).index();
+        $(".table_content").hide();
+        $(".table_content").eq(i).show();
+
+        $(".tab-front").removeClass("tab-front").addClass("tab-back");
+        $(this).removeClass("tab-back").addClass("tab-front");
+    });
+
+    // 获取商品类型属性表单
+    $("select[name='type_id']").change(function () {
+        // 获取商品类型id
+        var type_id = $(this).val();
+
+        $("#attr_content tr:gt(1)").remove();
+        // 根据商品类型id，获取属性表单
+        $.ajax({
+            type: "get",
+            url: "/index.php/Admin/Goods/getAttr/type_id/" + type_id,
+            dataType: "json",
+            success: function (data) {
+                var html = '';
+                $(data).each(function (k, v) {
+                    html += "<tr>";
+                    html += "<td class='label'>";
+                    html += v.attr_name + " : ";
+                    html += "</td>";
+                    html += "<td>";
+                    
+                    if (v.attr_option_values === '') {
+                        html += "<input type='text' name='attr_value[" + v.id + "][] value=''>";
+                    }
+                    
+                    if (v.attr_type === '0' && v.attr_option_values !== '') {
+                        var attrs = v.attr_option_values.split(',');
+                        html += "<select name='attr_value[" + v.id + "][]'>";
+                        html += "<option value=''>---请选择---</option>";
+                        for (var i = 0; i < attrs.length; ++i) {
+                            html += "<option value='" + attrs[i] + "'>" + attrs[i] + "</option>";
+                        }
+                        html += "</select>";
+                    }
+                    
+                    if (v.attr_type === '1') {
+                        html += " <div><a onclick='addnew(this)' href='javascript:return false;'>[+]</a> ";
+                        
+                        var attrs = v.attr_option_values.split(',');
+                        html += "<select name='attr_value[" + v.id + "][]'>";
+                        html += "<option value=''>---请选择---</option>";
+                        for (var i = 0; i < attrs.length; ++i) {
+                            html += "<option value='" + attrs[i] + "'>" + attrs[i] + "</option>";
+                        }
+                        html += "</select>";
+                        
+                        html += "&nbsp;&nbsp;属性价格：￥<input size='8' type='text' name='attr_price[" + v.id + "][]'/ > 元</div>";
+                    }
+                    html += "</td>";
+                    html += "</tr>";
+                });
+                $("#attr_content tr:gt(0)").remove();
+                $("#attr_content").append(html);
+            }
+        });
+    });
+    
+    function addcat(a) {
+        var newspan = $(a).next('span').clone();
+        newspan.children('select').children('option').eq(0).prop('selected', true);
+        $(a).parent().append(newspan);
+    }
+
+    function addnew(a) {
+        var div = $(a).parent();
+        if ($(a).html() === '[+]') {
+            var newtr = div.clone();
+            newtr.find('a').html('[-]');
+            // 去掉属性值
+            newtr.find(':input').val('');
+            // 追加
+            div.parent().append(newtr);
+        } else {
+            div.remove();
+        }
+    }
+    
+    function addFile(a){
+        var tr = $(a).parent().parent();
+        if($(a).html() === '[+]'){
+            var newtr = tr.clone();
+            newtr.find('a').html('[-]');
+            // 去掉属性值
+            newtr.find(':input').val('');
+            // 追加
+            tr.parent().append(newtr);
+        }else{
+            tr.remove();
+        }
+    }
+
+    function check_is_promoto(a) {
+        if ($(a).prop('checked')) {
+            $('.promote_price').removeProp('disabled');
+        } else {
+            $('.promote_price').prop('disabled', 'disabled');
+        }
+    }
+
+    // 使用会员折扣
+    function disabledMemberPrice(a) {
+        if ( $(a).prop('checked') === true ) {
+            $(a).parent().prev('td').children('input').val('-1');
+        } else {
+            $(a).parent().prev('td').children('input').val('');
+        }
+    }
+
+    // 时间获取器
+    $("#promote_start_time").datepicker();
+    $("#promote_end_time").datepicker();
+
+    // 在线编辑器
+    UE.getEditor('goods_desc', {
+        "initialFrameWidth": "100%", // 宽
+        "initialFrameHeight": 480, // 高
+        "maximumWords": 10000            // 最大可以输入的字符数量
+    });
+</script>
