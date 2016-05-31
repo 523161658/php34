@@ -57,9 +57,9 @@ class CartModel extends Model {
         # 根据$cart中的数据获取购物车页面所需要的所有数据
         $goodsModel = D('Admin/Goods');
         foreach($cart as $k=>$v){
-            $sql = 'SELECT GROUP_CONCAT(concat(b.attr_name,":",a.attr_value) SEPARATOR "<br />") attr_str  FROM `php34_goods_attr` a LEFT JOIN php34_attribute b on a.attr_id = b.id WHERE a.id in(' . $v['goods_attr_ids'] . ');';
+            $sql = 'SELECT concat(b.attr_name,":",a.attr_value) attr_str FROM `php34_goods_attr` a LEFT JOIN php34_attribute b on a.attr_id = b.id WHERE a.id in(' . $v['goods_attr_ids'] . ');';
             $data = $this->query($sql);
-            $cart[$k]['attr_str'] = $data[0]['attr_str'];
+            $cart[$k]['attr_str'] = $data;
             
             $info = $goodsModel->field('sm_logo,goods_name')->find($v['goods_id']);
             $cart[$k]['sm_logo'] = $info['sm_logo'];
