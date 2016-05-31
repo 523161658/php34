@@ -60,4 +60,6 @@ $(function(){
 		$("#total").text(total.toFixed(2));
 
 	});
+        
+        $('.amount').trigger('blur');
 });

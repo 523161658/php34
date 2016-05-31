@@ -61,10 +61,15 @@ class CartModel extends Model {
             $data = $this->query($sql);
             $cart[$k]['attr_str'] = $data;
             
-            $info = $goodsModel->field('sm_logo,goods_name')->find($v['goods_id']);
+            $info = $goodsModel->field('sm_logo,goods_name,shop_price')->find($v['goods_id']);
             $cart[$k]['sm_logo'] = $info['sm_logo'];
             $cart[$k]['goods_name'] = $info['goods_name'];
-            $cart[$k]['goods_price'] = $goodsModel->getMemberPrice($v['goods_id']);
+            if($memberPrice = $goodsModel->getMemberPrice($v['goods_id'])){
+                $price = $memberPrice;
+            }else{
+                $price = $info['shop_price'];
+            }
+            $cart[$k]['goods_price'] = $price;
         }
         
         if($cart){

@@ -28,8 +28,9 @@ class CartController extends PlateformController {
         $cartModel = D('Admin/Cart');
         $data = $cartModel->getCart();
         
-                echo "<pre>";
-        var_dump($data);die;
+//                echo "<pre>";
+//        var_dump($data[0]['attr_str']);die;
+        $this->assign('data',$data);
         # 设置页面属性
         $this->setPageInfo('购物车', '购物车', '购物车', 0, array('cart'), array('cart1'));
         $this->display();

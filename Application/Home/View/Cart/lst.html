@@ -34,26 +34,26 @@
         <tbody>
             <volist name="data" id="vo">
             <tr>
-                <td class="col1"><a href="{:U('/home/goods/detail/',array('id'=>$vo['goods_id']))}"><img src="/Public/Uploads/{$vo.sm_logo}" alt="" /></a> <strong><a href="{:U('/home/goods/detail/',array('id'=>$vo['goods_id']))}">{$vo.goods_name}</a></strong></td>
+                <td class="col1"><a href="{:U('/home/goods/detail/',array('id'=>$vo['goods_id']))}">{:showImage($vo['sm_logo'])}</a> <strong><a href="{:U('/home/goods/detail/',array('id'=>$vo['goods_id']))}">{$vo.goods_name}</a></strong></td>
                 <td class="col2">
                     <volist name="vo['attr_str']" id="vv">
                     <p>{$vv.attr_str}</p>
                     </volist>
                 </td>
-                <td class="col3">￥<span>{$vo.goods_price}</span></td>
+                <td class="col3">￥<span>{$vo.goods_price}</span>元</td>
                 <td class="col4"> 
                     <a href="javascript:;" class="reduce_num"></a>
                     <input type="text" name="amount" value="{$vo.goods_number}" class="amount"/>
                     <a href="javascript:;" class="add_num"></a>
                 </td>
-                <td class="col5">￥<span>{$vo['goods_price'] * $vo['goods_number']}</span></td>
+                <td class="col5">￥<span>{$vo['goods_price'] * $vo['goods_number']}</span>元</td>
                 <td class="col6"><a href="">删除</a></td>
             </tr>
             </volist>
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="6">购物金额总计： <strong>￥ <span id="total">1870.00</span></strong></td>
+                <td colspan="6">购物金额总计： <strong>￥ <span id="total"></span>元</strong></td>
             </tr>
         </tfoot>
     </table>
