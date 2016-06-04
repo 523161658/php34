@@ -3,7 +3,7 @@
 <!-- 页面头部 start -->
 <div class="header w990 bc mt15">
     <div class="logo w990">
-        <h2 class="fl"><a href="{:U('index')}"><img src="/Public/images/logo.png" alt="京西商城"></a></h2>
+        <h2 class="fl"><a href="/"><img src="/Public/images/logo.png" alt="京西商城"></a></h2>
         <div class="flow fr">
             <ul>
                 <li class="cur">1.我的购物车</li>
@@ -33,32 +33,32 @@
         </thead>
         <tbody>
             <volist name="data" id="vo">
-            <tr>
+            <tr goods_id="{$vo.goods_id}" goods_attr_ids="{$vo.goods_attr_ids}">
                 <td class="col1"><a href="{:U('/home/goods/detail/',array('id'=>$vo['goods_id']))}">{:showImage($vo['sm_logo'])}</a> <strong><a href="{:U('/home/goods/detail/',array('id'=>$vo['goods_id']))}">{$vo.goods_name}</a></strong></td>
                 <td class="col2">
                     <volist name="vo['attr_str']" id="vv">
                     <p>{$vv.attr_str}</p>
                     </volist>
                 </td>
-                <td class="col3">￥<span>{$vo.goods_price}</span>元</td>
+                <td class="col3">￥<span>{$vo.goods_price}.00</span></td>
                 <td class="col4"> 
                     <a href="javascript:;" class="reduce_num"></a>
                     <input type="text" name="amount" value="{$vo.goods_number}" class="amount"/>
                     <a href="javascript:;" class="add_num"></a>
                 </td>
-                <td class="col5">￥<span>{$vo['goods_price'] * $vo['goods_number']}</span>元</td>
-                <td class="col6"><a href="">删除</a></td>
+                <td class="col5">￥<span>{$vo['goods_price'] * $vo['goods_number']}.00</span></td>
+                <td class="col6"><a href="{:U('/home/cart/delete/',array('goods_id'=>$vo['goods_id'],'goods_attr_ids'=>$vo['goods_attr_ids']))}" onclick="javascript:confirm('你确定要删除吗？');">删除</a></td>
             </tr>
             </volist>
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="6">购物金额总计： <strong>￥ <span id="total"></span>元</strong></td>
+                <td colspan="6">购物金额总计： <strong>￥ <span id="total">.00</span></strong></td>
             </tr>
         </tfoot>
     </table>
     <div class="cart_btn w990 bc mt10">
-        <a href="" class="continue">继续购物</a>
+        <a href="/" class="continue">继续购物</a>
         <a href="" class="checkout">结 算</a>
     </div>
 </div>

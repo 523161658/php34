@@ -53,3 +53,12 @@ $(function(){
 
 
 });
+
+
+function getJsonObjLength(jsonObj) {
+    var Length = 0;
+    for (var item in jsonObj) {
+        Length++;
+    }
+    return Length;
+}

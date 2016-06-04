@@ -59,7 +59,12 @@ class CartModel extends Model {
         foreach($cart as $k=>$v){
             $sql = 'SELECT concat(b.attr_name,":",a.attr_value) attr_str FROM `php34_goods_attr` a LEFT JOIN php34_attribute b on a.attr_id = b.id WHERE a.id in(' . $v['goods_attr_ids'] . ');';
             $data = $this->query($sql);
-            $cart[$k]['attr_str'] = $data;
+            if($data){
+                $cart[$k]['attr_str'] = $data;
+            }else{
+                $cart[$k]['attr_str'] = array('-');
+            }
+            
             
             $info = $goodsModel->field('sm_logo,goods_name,shop_price')->find($v['goods_id']);
             $cart[$k]['sm_logo'] = $info['sm_logo'];
@@ -76,6 +81,45 @@ class CartModel extends Model {
             return $cart;
         }else{
             return '';
+        }
+    }
+    
+    /**
+     * 将购物车cookie数据转入到数据库中
+     */
+    public function cookieToDb(){
+        $_cart = cookie('cart') != '' ? unserialize(cookie('cart')) : array();
+        foreach($_cart as $k=>$v){
+            $str = explode('-',$k);
+            $this->addToCart($str[0], $str[1], $v);
+        }
+        // 清空cookie数据
+        cookie('cart',null,array('expire' => 86400, 'path' => '/', 'domain' => 'php34.com'));
+    }
+    
+    /**
+     * 更新购物车数据
+     */
+    public function updataCart($goods_id,$goods_attr_ids,$goods_number){
+        if(session('member')){
+            $this->where(array('goods_id'=>array('eq',$goods_id),'goods_attr_ids'=>array('eq',$goods_attr_ids)))->setField('goods_number',$goods_number);
+        }else{
+            $_cart = cookie('cart') != '' ? unserialize(cookie('cart')) : array();
+            $_cart[$goods_id . '-' . $goods_attr_ids] = $goods_number;
+            cookie('cart', serialize($_cart), array('expire' => 86400, 'path' => '/', 'domain' => 'php34.com'));
+        }
+    }
+    
+    /**
+     * 删除购物车中的数据
+     */
+    public function deleteCart($goods_id,$goods_attr_ids){
+        if(session('member')){
+            $this->where(array('goods_id'=>array('eq',$goods_id),'goods_attr_ids'=>array('eq',$goods_attr_ids),'member_id'=>array('eq',session('member.id'))))->delete();
+        }else{
+            $_cart = cookie('cart') != '' ? unserialize(cookie('cart')) : array();
+            unset($_cart[$goods_id . '-' . $goods_attr_ids]);
+            cookie('cart', serialize($_cart), array('expire' => 86400, 'path' => '/', 'domain' => 'php34.com'));
         }
     }
 

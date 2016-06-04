@@ -58,7 +58,7 @@ class GoodsController extends PlateformController {
      * 将该商品存入COOKIE中
      */
     public function getRecentlyGoods(){
-        $id = I('get.id');
+        $id = I('get.id',0);
         // 先读取最近浏览过的商品
         $recentlyGoods = cookie('recentlyGoods') != '' ? unserialize(cookie('recentlyGoods')) : array();
         // 如果有则返回商品数据

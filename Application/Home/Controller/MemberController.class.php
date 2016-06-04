@@ -66,6 +66,11 @@ class MemberController extends PlateformController {
                 if ($member_model->checkLogin()) {
                     if($from = session('from')){
                         session('from',null);
+                        
+                        // 将cookie数据入库
+                        $cartModel = D('Admin/Cart');
+                        $cartModel->cookieToDb();
+                        
                         redirect($from);
                     }else{
                         redirect('/');
@@ -84,7 +89,7 @@ class MemberController extends PlateformController {
      */
     public function loginout(){
         session('member',null);
-        $this->redirect('/');
+        redirect('/');
     }
     
     /**

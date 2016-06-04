@@ -357,30 +357,7 @@
             }
         });
 
-        // 将该商品存入COOKIE中,并读取最近浏览过的商品
-        $.ajax({
-            type: "get",
-            url: "{:U('/home/goods/getRecentlyGoods/', array('id'=>I('get.id')))}",
-            dataType: "json",
-            success: function (data) {
-                var html1 = '';
-                var html2 = '';
-                var len = getJsonObjLength(data) - 1;
-                $(data).each(function (k, v) {
-                    var url = "{:U('/home/goods/detail/id/" + v.id + "')}";
-                    var img = "/Public/Uploads/" + v.sm_logo;
-                    html1 += '<li><a href="' + url + '"><img src="' + img + '" alt="" /></a></li>';
-                    html2 += '<dl';
-                    if (k !== len) {
-                        html2 += ' class="last"';
-                    }
-                    html2 += '><dt><a href="' + url + '"><img src="' + img + '" alt="" /></a></dt><dd><a href="' + url + '">' + v.goods_name + '</a></dd></dl>';
 
-                });
-                $('#recentlyGoods').html(html1);
-                $('#left_recently_goods').html(html2);
-            }
-        });
 
         // 通过AJAX判断用户是否已登录，如登录，则显示评论表单
         $.ajax({
@@ -436,14 +413,6 @@
         }
     };
     $(window).bind("scroll", load_more); 
-
-    function getJsonObjLength(jsonObj) {
-        var Length = 0;
-        for (var item in jsonObj) {
-            Length++;
-        }
-        return Length;
-    }
     
     // 获取评论
     var curPage = 1;    // 初始化当前页
