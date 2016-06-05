@@ -293,3 +293,39 @@ CREATE TABLE php34_cart
 	primary key(id),
 	key member_id(member_id)
 )engine=MyISAM default charset=utf8 comment '购物车';
+
+DROP TABLE IF EXISTS php34_order;
+CREATE TABLE php34_order
+(
+	id mediumint unsigned not null auto_increment,
+	member_id mediumint unsigned not null comment '会员id',
+	addtime int unsigned not null comment '下单时间',
+	shr_name varchar(30) not null comment '收货人姓名',
+	shr_province varchar(30) not null comment '省',
+	shr_city varchar(30) not null comment '市',
+	shr_area varchar(30) not null comment '地区',
+	shr_tel varchar(30) not null comment '收货人电话',
+	shr_address varchar(30) not null comment '收货人地址',
+	total_price decimal(10,2) not null comment '订单总价',
+	post_method varchar(30) not null comment '发货方式',
+	pay_method varchar(30) not null comment '支付方式',
+	pay_status tinyint unsigned not null default '0' comment '支付状态，0：未支付 1：已支付',
+	post_status tinyint unsigned not null default '0' comment '发货状态，0：未发货 1：已发货 2：已收到货',
+	primary key(id),
+	key member_id(member_id)
+)engine=InnoDB default charset=utf8 comment '订单基本信息';
+
+DROP TABLE IF EXISTS php34_order_goods;
+CREATE TABLE php34_order_goods
+(
+	order_id mediumint unsigned not null comment '订单id',
+	member_id mediumint unsigned not null comment '会员id',
+	goods_id mediumint unsigned not null comment '商品ID',
+	goods_attr_id varchar(30) not null default '' comment '选择的属性的ID，如果有多个用，隔开',
+	goods_attr_str varchar(150) not null default '' comment '选择的属性的字符串',
+	goods_price decimal(10,2) not null comment '商品的价格',
+	goods_number int unsigned not null comment '购买的数量',
+	key order_id(order_id),
+	key goods_id(goods_id),
+	key member_id(member_id)
+)engine=InnoDB default charset=utf8 comment '订单商品';

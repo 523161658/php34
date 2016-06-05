@@ -22,8 +22,11 @@
                     </td>
                     </volist>
                 <td width='120' align="center">
-                    <input type="text" name="goods_number[]" size='10' value="{$v1['goods_number']}"></td>
+                    <input type="text" name="goods_number[]" size='10' value="{$v1['goods_number']}">
+                </td>
+                <if condition="$data neq null">
                 <td width='80' align="center"><input type='button' <if condition="$k eq 1">value="+"<else/>value="-"</if> onclick="addnew(this)"></td>
+                </if>
                 </tr>
                 </volist>
             </table>

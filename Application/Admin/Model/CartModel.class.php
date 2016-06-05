@@ -59,13 +59,13 @@ class CartModel extends Model {
         foreach($cart as $k=>$v){
             $sql = 'SELECT concat(b.attr_name,":",a.attr_value) attr_str FROM `php34_goods_attr` a LEFT JOIN php34_attribute b on a.attr_id = b.id WHERE a.id in(' . $v['goods_attr_ids'] . ');';
             $data = $this->query($sql);
+
             if($data){
                 $cart[$k]['attr_str'] = $data;
             }else{
                 $cart[$k]['attr_str'] = array('-');
             }
-            
-            
+             
             $info = $goodsModel->field('sm_logo,goods_name,shop_price')->find($v['goods_id']);
             $cart[$k]['sm_logo'] = $info['sm_logo'];
             $cart[$k]['goods_name'] = $info['goods_name'];

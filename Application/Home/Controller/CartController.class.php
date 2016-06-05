@@ -14,6 +14,8 @@ class CartController extends PlateformController {
             if ($goods_attr_id) {
                 sort($goods_attr_id);
                 $goods_attr_ids = implode(',', $goods_attr_id);
+            }else{
+                $goods_attr_ids = 0;
             }
             $cartModel->addToCart(I('post.goods_id'), $goods_attr_ids, I('post.goods_number'));
 

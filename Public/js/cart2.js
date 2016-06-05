@@ -56,5 +56,4 @@ $(function(){
 	$(".personal").click(function(){
 		$(".company_input").attr("disabled","disabled");
 	});
-
 });

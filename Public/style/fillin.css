@@ -28,9 +28,9 @@
 .confirm_btn:hover span{background-position: 0 -90px;}
 .delivery_select table{width: 100%;}
 .delivery_select table td{padding: 4px 0;}
-.delivery_select .col1{width: 35%;}
-.delivery_select .col2{width: 15%;}
-.delivery_select .col3{width: 50%;}
+.delivery_select .col1{width: 20%;}
+.delivery_select .col2{width: 20%;}
+.delivery_select .col3{width: 60%;}
 .delivery_select .cur{background: #fff4d3;}
 
 .pay_select td{padding: 4px 0;}

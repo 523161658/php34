@@ -176,7 +176,7 @@ class GoodsController extends PlateformController {
             // 先删除旧数据
             $goods_number_model->where(array('goods_id'=>array('eq',$goods_id)))->delete();
             //再添加新数据
-            $goods_attr_id = I('post.goods_attr_id');
+            $goods_attr_id = I('post.goods_attr_id',array(0));
             $goods_number = I('post.goods_number');
             $rate = count($goods_attr_id) / count($goods_number);
             $_i = 0;
@@ -227,6 +227,9 @@ class GoodsController extends PlateformController {
         
         // 如已有库存量数据则获取
         $goods_number_list = $goods_number_model->where(array('goods_id'=>array('eq',$goods_id)))->select();
+        if($goods_number_list == null){
+            $goods_number_list[0] = array(0);
+        }
         $this->assign('goods_number_list', $goods_number_list);
 
         $this->setPageInfo('商品库存', '商品列表', U('lst'));
