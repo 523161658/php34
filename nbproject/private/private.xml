@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/php34/Application/Admin/Model/OrderModel.class.php</file>
-            <file>file:/C:/wamp/www/php34/Application/Admin/Model/CartModel.class.php</file>
-            <file>file:/C:/wamp/www/php34/Application/Home/Controller/CartController.class.php</file>
-            <file>file:/C:/wamp/www/php34/Application/Home/Controller/OrderController.class.php</file>
-            <file>file:/C:/wamp/www/php34/Application/Home/View/Cart/lst.html</file>
+            <file>file:/E:/website/php34/Application/Admin/Model/OrderModel.class.php</file>
+            <file>file:/E:/website/php34/Application/Home/Controller/OrderController.class.php</file>
+            <file>file:/E:/website/php34/Application/Home/View/Cart/lst.html</file>
+            <file>file:/E:/website/php34/Application/Home/Controller/CartController.class.php</file>
         </group>
     </open-files>
 </project-private>

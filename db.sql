@@ -215,7 +215,7 @@ CREATE TABLE php34_goods_number
 	goods_number int unsigned not null comment '库存量',
 	goods_attr_id varchar(150) not null comment '商品属性ID列表-注释：这里的ID保存的是上面php34_goods_attr表中的ID，通过这个ID即可以知道值是什么也可以是知道属性是什么,如果有多个ID组合就用，号隔开保存一个字符串，并且存时要按ID的升序存,将来前台查询库存量时也要先把商品属性ID升序拼成字符串然后查询数据库',
 	key goods_id(goods_id)
-)engine=MyISAM default charset=utf8 comment '商品库存量';
+)engine=InnoDB default charset=utf8 comment '商品库存量';
 
 DROP TABLE IF EXISTS php34_member;
 CREATE TABLE php34_member

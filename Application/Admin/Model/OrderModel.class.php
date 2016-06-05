@@ -25,8 +25,14 @@ class OrderModel extends Model {
         $this->fp = fopen('./order.lock','r');
         flock($this->fp,LOCK_EX);
         $goods_number_model = M('GoodsNumber');
-        $total = 0;
+        $total_price = 0;
+
         foreach($_cart as $k=>$v){
+            $attr_str = $v['goods_id'].'-'.$v['goods_attr_ids'];
+            if(!in_array($attr_str,cookie('chooseGoods'))){
+                continue;
+            }
+            
             $goods = $goods_number_model->field('goods_number')->where(array('goods_id'=>array('eq',$v['goods_id']),'goods_attr_id'=>array('eq',$v['goods_attr_ids'])))->find();
             if($goods['goods_number'] < $v['goods_number']){
                 $this->error = $v['goods_name'].'商品库存不足！';
@@ -49,6 +55,11 @@ class OrderModel extends Model {
         $order_goods_model = M('OrderGoods');
         $goods_number_model = M('GoodsNumber');
         foreach($_cart as $k=>$v){
+            $attr_str = $v['goods_id'].'-'.$v['goods_attr_ids'];
+            if(!in_array($attr_str,cookie('chooseGoods'))){
+                continue;
+            }
+            
             $order_goods = array();
             $order_goods['order_id'] = $data['id'];
             $order_goods['member_id'] = session('member.id');
@@ -76,6 +87,7 @@ class OrderModel extends Model {
         $this->commit();
         flock($this>fp,LOCK_UN);
         fclose($this->fp);
+        cookie('chooseGoods',null,array('expire'=>86400,'path'=>'/','domain'=>'php34.com'));
     }
 
 }

@@ -12,7 +12,8 @@
 .mycart th{text-align: center; font-weight: bold;}
 .mycart tbody td{border-bottom: 1px solid #E7E3E7;}
 .mycart td{text-align: center;}
-.mycart .col1{width: 40%;}
+.mycart .col0{width: 5%;}
+.mycart .col1{width: 35%;}
 .mycart .col2{width: 20%;}
 .mycart .col3{width: 10%;}
 .mycart .col4{width: 10%;}

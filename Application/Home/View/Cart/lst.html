@@ -20,9 +20,11 @@
 <!-- 主体部分 start -->
 <div class="mycart w990 mt10 bc">
     <h2><span>我的购物车</span></h2>
+    <form name="buyGoods" id="buyGoods" action="{:U('order/lst')}" method="post">
     <table>
         <thead>
             <tr>
+                <th class="col00">全选<br/><input type="checkbox" name="allChoose"></th>
                 <th class="col1">商品名称</th>
                 <th class="col2">商品信息</th>
                 <th class="col3">单价</th>
@@ -34,6 +36,7 @@
         <tbody>
             <volist name="data" id="vo">
             <tr goods_id="{$vo.goods_id}" goods_attr_ids="{$vo.goods_attr_ids}">
+                <td class="col0"><input type="checkbox" name="chooseGoods[]" value="{$vo.goods_id}-{$vo.goods_attr_ids}" <if condition="$vo['is_choose'] eq '1'">checked="checked"</if> ></td>
                 <td class="col1"><a href="{:U('/home/goods/detail/',array('id'=>$vo['goods_id']))}">{:showImage($vo['sm_logo'])}</a> <strong><a href="{:U('/home/goods/detail/',array('id'=>$vo['goods_id']))}">{$vo.goods_name}</a></strong></td>
                 <td class="col2">
                     <volist name="vo['attr_str']" id="vv">
@@ -57,9 +60,10 @@
             </tr>
         </tfoot>
     </table>
+    </form>
     <div class="cart_btn w990 bc mt10">
         <a href="/" class="continue">继续购物</a>
-        <a href="{:U('order/lst')}" class="checkout">结 算</a>
+        <a href="javascript:void(0);" class="checkout" onclick="$('#buyGoods').submit()">结 算</a>
     </div>
 </div>
 <!-- 主体部分 end -->
