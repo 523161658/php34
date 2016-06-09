@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.11, for Win32 (AMD64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: localhost    Database: php34
 -- ------------------------------------------------------
--- Server version	5.7.11
+-- Server version	5.7.9-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -121,6 +121,33 @@ INSERT INTO `php34_brand` VALUES (1,'lenvol','http://www.lenvol.com','Admin/2016
 UNLOCK TABLES;
 
 --
+-- Table structure for table `php34_cart`
+--
+
+DROP TABLE IF EXISTS `php34_cart`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `php34_cart` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `goods_id` mediumint(8) unsigned NOT NULL COMMENT '商品ID',
+  `goods_attr_ids` varchar(30) NOT NULL DEFAULT '' COMMENT '选择的商品属性ID，多个用，隔开',
+  `goods_number` int(10) unsigned NOT NULL COMMENT '购买的数量',
+  `member_id` mediumint(8) unsigned NOT NULL COMMENT '会员id',
+  PRIMARY KEY (`id`),
+  KEY `member_id` (`member_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COMMENT='购物车';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `php34_cart`
+--
+
+LOCK TABLES `php34_cart` WRITE;
+/*!40000 ALTER TABLE `php34_cart` DISABLE KEYS */;
+/*!40000 ALTER TABLE `php34_cart` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `php34_category`
 --
 
@@ -162,7 +189,7 @@ CREATE TABLE `php34_comment` (
   `used` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '有用的数量',
   PRIMARY KEY (`id`),
   KEY `goods_id` (`goods_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='评论';
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COMMENT='评论';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -171,6 +198,7 @@ CREATE TABLE `php34_comment` (
 
 LOCK TABLES `php34_comment` WRITE;
 /*!40000 ALTER TABLE `php34_comment` DISABLE KEYS */;
+INSERT INTO `php34_comment` VALUES (7,'fda发',5,1464267340,18,66,0),(8,'发大水',5,1464267346,18,66,0),(9,'范德萨',5,1464268423,18,66,0),(10,'范德萨',5,1464268426,18,66,0),(11,'范德萨方法',5,1464268431,18,66,0),(12,'范德萨丰',5,1464268439,18,66,0),(13,'大厦',5,1464268587,18,66,0),(14,'FDAS',5,1464268590,18,66,0),(15,'1',5,1464270853,18,66,0),(16,'3',5,1464270857,18,66,0),(17,'4',5,1464270859,18,66,0),(18,'5',5,1464270863,18,66,0),(19,'6',5,1464270867,18,66,0);
 /*!40000 ALTER TABLE `php34_comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -250,7 +278,7 @@ CREATE TABLE `php34_goods_attr` (
   PRIMARY KEY (`id`),
   KEY `goods_id` (`goods_id`),
   KEY `attr_id` (`attr_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=121 DEFAULT CHARSET=utf8 COMMENT='商品属性';
+) ENGINE=MyISAM AUTO_INCREMENT=122 DEFAULT CHARSET=utf8 COMMENT='商品属性';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -259,7 +287,7 @@ CREATE TABLE `php34_goods_attr` (
 
 LOCK TABLES `php34_goods_attr` WRITE;
 /*!40000 ALTER TABLE `php34_goods_attr` DISABLE KEYS */;
-INSERT INTO `php34_goods_attr` VALUES (1,33,14,'A4',23.00),(2,35,14,'A4',45.00),(3,39,1,'1111111111',0.00),(4,39,3,'2222222222',0.00),(5,39,13,'彩印',0.00),(6,39,14,'A3',12.00),(7,39,14,'A5',23.00),(8,54,1,'shangwuju',0.00),(9,54,3,'4578975641',0.00),(10,54,13,'彩印',0.00),(11,54,14,'A4',12.00),(12,54,14,'A5',23.00),(13,55,1,'shangwuju',0.00),(14,55,3,'564564d85fs',0.00),(15,55,13,'彩印',0.00),(16,55,14,'A3',232.00),(17,55,14,'A5',123.00),(117,8,14,'A5',73.00),(116,8,14,'A4',63.00),(115,8,14,'A3',52.00),(114,8,13,'彩印',0.00),(23,69,1,'22',0.00),(24,69,3,'22',0.00),(25,70,4,'320*240',11.00),(26,70,5,'CDMA',22.00),(27,71,4,'320*240',0.00),(28,72,4,'320*240',0.00),(29,72,5,'CDMA',52.00),(113,8,3,'1264851',0.00),(112,8,1,'中国机械工业出版社',0.00),(102,66,15,'触屏',0.00),(99,66,4,'320*240',0.00),(100,66,5,'GSM',22.00),(118,8,16,'185mm*260mm',123.00),(119,8,16,'195mm*275mm',125.00);
+INSERT INTO `php34_goods_attr` VALUES (1,33,14,'A4',23.00),(2,35,14,'A4',45.00),(3,39,1,'1111111111',0.00),(4,39,3,'2222222222',0.00),(5,39,13,'彩印',0.00),(6,39,14,'A3',12.00),(7,39,14,'A5',23.00),(8,54,1,'shangwuju',0.00),(9,54,3,'4578975641',0.00),(10,54,13,'彩印',0.00),(11,54,14,'A4',12.00),(12,54,14,'A5',23.00),(13,55,1,'shangwuju',0.00),(14,55,3,'564564d85fs',0.00),(15,55,13,'彩印',0.00),(16,55,14,'A3',232.00),(17,55,14,'A5',123.00),(117,8,14,'A5',73.00),(116,8,14,'A4',63.00),(115,8,14,'A3',52.00),(114,8,13,'彩印',0.00),(23,69,1,'22',0.00),(24,69,3,'22',0.00),(25,70,4,'320*240',11.00),(26,70,5,'CDMA',22.00),(27,71,4,'320*240',0.00),(28,72,4,'320*240',0.00),(29,72,5,'CDMA',52.00),(113,8,3,'1264851',0.00),(112,8,1,'中国机械工业出版社',0.00),(102,66,15,'触屏',0.00),(99,66,4,'320*240',0.00),(100,66,5,'GSM',22.00),(118,8,16,'185mm*260mm',123.00),(119,8,16,'195mm*275mm',125.00),(121,66,5,'CDMA',33.00);
 /*!40000 ALTER TABLE `php34_goods_attr` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -284,7 +312,7 @@ CREATE TABLE `php34_goods_cat` (
 
 LOCK TABLES `php34_goods_cat` WRITE;
 /*!40000 ALTER TABLE `php34_goods_cat` DISABLE KEYS */;
-INSERT INTO `php34_goods_cat` VALUES (8,1),(19,3),(19,5),(20,3),(20,5),(21,3),(21,5),(22,3),(24,3),(25,3),(26,3),(28,3),(29,6),(30,7),(30,8),(31,7),(31,8),(32,7),(33,7),(34,7),(35,6),(35,8),(8,7),(37,7),(38,7),(39,7),(40,7),(41,7),(42,7),(43,6),(44,6),(45,6),(46,6),(47,6),(48,6),(49,6),(50,6),(51,6),(52,6),(53,6),(54,6),(55,6),(56,7),(57,7),(58,6),(59,6),(60,0),(61,0),(62,0),(63,0),(64,0),(65,0),(66,8),(66,6),(67,6),(67,8),(68,0),(69,6),(70,0),(71,4),(72,4),(18,5),(18,7);
+INSERT INTO `php34_goods_cat` VALUES (8,1),(19,3),(19,5),(20,3),(20,5),(21,3),(21,5),(22,3),(24,3),(25,3),(26,3),(28,3),(29,6),(30,7),(30,8),(31,7),(31,8),(32,7),(33,7),(34,7),(35,6),(35,8),(8,7),(37,7),(38,7),(39,7),(40,7),(41,7),(42,7),(43,6),(44,6),(45,6),(46,6),(47,6),(48,6),(49,6),(50,6),(51,6),(52,6),(53,6),(54,6),(55,6),(56,7),(57,7),(58,6),(59,6),(60,0),(61,0),(62,0),(63,0),(64,0),(65,0),(66,6),(66,8),(67,6),(67,8),(68,0),(69,6),(70,0),(71,4),(72,4),(18,5),(18,7);
 /*!40000 ALTER TABLE `php34_goods_cat` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -300,7 +328,7 @@ CREATE TABLE `php34_goods_number` (
   `goods_number` int(10) unsigned NOT NULL COMMENT '库存量',
   `goods_attr_id` varchar(150) NOT NULL COMMENT '商品属性ID列表-注释：这里的ID保存的是上面php34_goods_attr表中的ID，通过这个ID即可以知道值是什么也可以是知道属性是什么,如果有多个ID组合就用，号隔开保存一个字符串，并且存时要按ID的升序存,将来前台查询库存量时也要先把商品属性ID升序拼成字符串然后查询数据库',
   KEY `goods_id` (`goods_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='商品库存量';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品库存量';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -309,7 +337,7 @@ CREATE TABLE `php34_goods_number` (
 
 LOCK TABLES `php34_goods_number` WRITE;
 /*!40000 ALTER TABLE `php34_goods_number` DISABLE KEYS */;
-INSERT INTO `php34_goods_number` VALUES (8,12,'116,118'),(8,100,'117,119'),(8,26,'115,119');
+INSERT INTO `php34_goods_number` VALUES (8,12,'116,118'),(8,94,'117,118'),(8,100,'117,119'),(8,26,'115,119'),(72,100,'0'),(66,96,'100'),(66,100,'121');
 /*!40000 ALTER TABLE `php34_goods_number` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -447,6 +475,74 @@ LOCK TABLES `php34_member_price` WRITE;
 /*!40000 ALTER TABLE `php34_member_price` DISABLE KEYS */;
 INSERT INTO `php34_member_price` VALUES (29,1,-1.00),(29,2,-1.00),(29,3,-1.00),(30,1,-1.00),(30,2,-1.00),(30,3,-1.00),(31,1,-1.00),(31,2,-1.00),(31,3,-1.00),(32,1,-1.00),(32,2,-1.00),(32,3,-1.00),(33,1,-1.00),(33,2,-1.00),(33,3,-1.00),(34,1,-1.00),(34,2,-1.00),(34,3,-1.00),(35,1,-1.00),(35,2,-1.00),(35,3,-1.00),(37,1,-1.00),(37,2,-1.00),(37,3,-1.00),(38,1,-1.00),(38,2,-1.00),(38,3,-1.00),(39,1,-1.00),(39,2,-1.00),(39,3,-1.00),(40,1,-1.00),(40,2,-1.00),(40,3,-1.00),(41,1,-1.00),(41,2,-1.00),(41,3,-1.00),(42,1,-1.00),(42,2,-1.00),(42,3,-1.00),(43,1,-1.00),(43,2,-1.00),(43,3,-1.00),(44,1,-1.00),(44,2,-1.00),(44,3,-1.00),(45,1,-1.00),(45,2,-1.00),(45,3,-1.00),(46,1,-1.00),(46,2,-1.00),(46,3,-1.00),(47,1,-1.00),(47,2,-1.00),(47,3,-1.00),(48,1,-1.00),(48,2,-1.00),(48,3,-1.00),(49,1,-1.00),(49,2,-1.00),(49,3,-1.00),(50,1,-1.00),(50,2,-1.00),(50,3,-1.00),(51,1,-1.00),(51,2,-1.00),(51,3,-1.00),(52,1,-1.00),(52,2,-1.00),(52,3,-1.00),(54,1,-1.00),(54,2,-1.00),(54,3,-1.00),(55,1,-1.00),(55,2,-1.00),(55,3,-1.00),(56,1,-1.00),(56,2,-1.00),(56,3,-1.00),(57,1,-1.00),(57,2,-1.00),(57,3,-1.00),(59,1,-1.00),(59,2,-1.00),(59,3,-1.00),(63,1,0.00),(63,2,0.00),(63,3,0.00),(64,1,0.00),(64,2,0.00),(64,3,0.00),(65,1,0.00),(65,2,0.00),(65,3,0.00),(66,3,160.00),(66,2,170.00),(66,1,150.00),(67,1,-1.00),(67,2,-1.00),(67,3,-1.00),(68,1,-1.00),(68,2,-1.00),(68,3,-1.00),(69,1,-1.00),(69,2,-1.00),(69,3,-1.00),(70,1,-1.00),(70,2,-1.00),(70,3,-1.00),(71,1,-1.00),(71,2,-1.00),(71,3,-1.00),(72,3,-1.00),(72,2,-1.00),(72,1,-1.00),(18,3,90.00),(18,2,94.00),(18,1,95.00),(8,3,-1.00),(8,2,-1.00),(8,1,4980.00);
 /*!40000 ALTER TABLE `php34_member_price` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `php34_order`
+--
+
+DROP TABLE IF EXISTS `php34_order`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `php34_order` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `member_id` mediumint(8) unsigned NOT NULL COMMENT '会员id',
+  `addtime` int(10) unsigned NOT NULL COMMENT '下单时间',
+  `shr_name` varchar(30) NOT NULL COMMENT '收货人姓名',
+  `shr_province` varchar(30) NOT NULL COMMENT '省',
+  `shr_city` varchar(30) NOT NULL COMMENT '市',
+  `shr_area` varchar(30) NOT NULL COMMENT '地区',
+  `shr_tel` varchar(30) NOT NULL COMMENT '收货人电话',
+  `shr_address` varchar(30) NOT NULL COMMENT '收货人地址',
+  `total_price` decimal(10,2) NOT NULL COMMENT '订单总价',
+  `post_method` varchar(30) NOT NULL COMMENT '发货方式',
+  `pay_method` varchar(30) NOT NULL COMMENT '支付方式',
+  `pay_status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '支付状态，0：未支付 1：已支付',
+  `post_status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '发货状态，0：未发货 1：已发货 2：已收到货',
+  PRIMARY KEY (`id`),
+  KEY `member_id` (`member_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='订单基本信息';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `php34_order`
+--
+
+LOCK TABLES `php34_order` WRITE;
+/*!40000 ALTER TABLE `php34_order` DISABLE KEYS */;
+INSERT INTO `php34_order` VALUES (4,18,1465131477,'董锦成','北京','朝阳区','西二旗','1355820518','萧峰',4980.00,'1','1',0,0),(5,18,1465166332,'董锦成','北京','朝阳区','西二旗','1355820518','萧峰',150.00,'1','1',0,0),(6,18,1465209618,'董锦成','北京','朝阳区','西三旗','1355820518','萧峰',4980.00,'1','1',0,0),(7,18,1465209978,'董锦成','北京','朝阳区','西二旗','1355820518','萧峰',4980.00,'1','1',0,0),(8,18,1465210131,'董锦成','北京','东城区','西二旗','1355820518','萧峰',150.00,'1','1',0,0),(9,18,1465213305,'董锦成','北京','朝阳区','西三旗','1355820518','萧峰',4980.00,'1','1',0,0);
+/*!40000 ALTER TABLE `php34_order` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `php34_order_goods`
+--
+
+DROP TABLE IF EXISTS `php34_order_goods`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `php34_order_goods` (
+  `order_id` mediumint(8) unsigned NOT NULL COMMENT '订单id',
+  `member_id` mediumint(8) unsigned NOT NULL COMMENT '会员id',
+  `goods_id` mediumint(8) unsigned NOT NULL COMMENT '商品ID',
+  `goods_attr_id` varchar(30) NOT NULL DEFAULT '' COMMENT '选择的属性的ID，如果有多个用，隔开',
+  `goods_attr_str` varchar(150) NOT NULL DEFAULT '' COMMENT '选择的属性的字符串',
+  `goods_price` decimal(10,2) NOT NULL COMMENT '商品的价格',
+  `goods_number` int(10) unsigned NOT NULL COMMENT '购买的数量',
+  KEY `order_id` (`order_id`),
+  KEY `goods_id` (`goods_id`),
+  KEY `member_id` (`member_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单商品';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `php34_order_goods`
+--
+
+LOCK TABLES `php34_order_goods` WRITE;
+/*!40000 ALTER TABLE `php34_order_goods` DISABLE KEYS */;
+INSERT INTO `php34_order_goods` VALUES (4,18,8,'117,118','a:2:{i:0;a:1:{s:8:\"attr_str\";s:9:\"大小:A5\";}i:1;a:1:{s:8:\"attr_str\";s:18:\"开版:185mm*260mm\";}}',4980.00,1),(5,18,66,'100','a:1:{i:0;a:1:{s:8:\"attr_str\";s:10:\"模式:GSM\";}}',150.00,1),(6,18,8,'117,118','a:2:{i:0;a:1:{s:8:\"attr_str\";s:9:\"大小:A5\";}i:1;a:1:{s:8:\"attr_str\";s:18:\"开版:185mm*260mm\";}}',4980.00,1),(7,18,8,'117,118','a:2:{i:0;a:1:{s:8:\"attr_str\";s:9:\"大小:A5\";}i:1;a:1:{s:8:\"attr_str\";s:18:\"开版:185mm*260mm\";}}',4980.00,1),(8,18,66,'100','a:1:{i:0;a:1:{s:8:\"attr_str\";s:10:\"模式:GSM\";}}',150.00,1),(9,18,8,'117,118','a:2:{i:0;a:1:{s:8:\"attr_str\";s:9:\"大小:A5\";}i:1;a:1:{s:8:\"attr_str\";s:18:\"开版:185mm*260mm\";}}',4980.00,1);
+/*!40000 ALTER TABLE `php34_order_goods` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -633,4 +729,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-25  7:18:50
+-- Dump completed on 2016-06-09  8:40:52
