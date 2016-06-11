@@ -1,24 +1,47 @@
 <layout name="Layout/header_footer" />
 <div class="main-div">
     <form name="main_form" method="POST" action="__SELF__" enctype="multipart/form-data" >
-    	<input type="hidden" name="id" value="<?php echo $data['id']; ?>" />
+        <input type="hidden" name="id" value="<?php echo $data['id']; ?>" />
         <table cellspacing="1" cellpadding="3" width="100%">
-			<tr>
-				<td class="label">上级权限：</td>
-				<td>
-					<select name="parent_id">
-						<option value="0">顶级权限</option>
-						<?php foreach ($parentData as $k => $v): ?> 
-						<?php if($v['id'] == $data['id'] || in_array($v['id'], $children)) continue ; ?> 
-						<option <?php if($v['id'] == $data['parent_id']): ?>selected="selected"<?php endif; ?> value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']).$v['cat_name']; ?></option>
-						<?php endforeach; ?>					</select>
-				</td>
-			</tr>
+            <tr>
+                <td class="label">上级权限：</td>
+                <td>
+                    <select name="parent_id">
+                        <option value="0">顶级权限</option>
+                        <?php foreach ($parentData as $k => $v): ?> 
+                        <?php if($v['id'] == $data['id'] || in_array($v['id'], $children)) continue ; ?> 
+                        <option <?php if($v['id'] == $data['parent_id']): ?>selected="selected"<?php endif; ?> value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']).$v['cat_name']; ?></option>
+                        <?php endforeach; ?>					</select>
+                </td>
+            </tr>
             <tr>
                 <td class="label">商品分类名称：</td>
                 <td>
                     <input  type="text" name="cat_name" value="<?php echo $data['cat_name']; ?>" />
                 </td>
+            </tr>
+            <tr>
+                <td class="label">商品搜索属性：</td>
+                <td>
+            
+                <ul class="list">
+                    <volist name="attrData" id="v1">
+                    <li style="padding-bottom: 5px">
+                        <a href="javascript:void(0);" onclick="addNew($(this));" style="width:20px;float: left"><if condition="$i eq 1">[+]<else/>[-]</if></a>
+                        <select name="search_type_id[]" onchange="change($(this))">
+                            <option value="">--请选择搜索分类--</option>
+                            <volist name="typeData" id="v2">
+                                <option value="{$v2.id}" <if condition="$v2.id eq $v1['type_id']">selected="selected"</if> >{$v2.type_name}</option>
+                            </volist>
+                        </select>
+                        <select name="search_attr_id[]" attrId="{$v1.id}">
+                            <option value="">--请选择分类属性--</option>
+                        </select>
+                    </li>
+                    </volist>
+                </ul>
+            
+            </td>
             </tr>
             <tr>
                 <td colspan="99" align="center">
@@ -30,4 +53,53 @@
     </form>
 </div>
 <script>
+    function change(_this) {
+        var typeId = $(_this).val();
+        var attrId = $(_this).next('select').attr('attrId');
+        var html = '<option value="">--请选择分类属性--</option>';
+        if (typeId !== '') {
+            $.ajax({
+                type: "get",
+                url: "{:U('getAttr','',false)}/typeId/" + typeId,
+                dataType: "json",
+                success: function (data) {
+                    $(data).each(function (k, v) {     
+                        var opt = '';
+                        if (attrId === v.id) {
+                            opt = 'selected="selected"';
+                        } else {
+                            opt = '';
+                        }
+                        html += "<option " + opt + " value='" + v['id'] + "'>" + v['attr_name'] + "</option>";
+                    });
+                    $(_this).next("select").html(html);
+                }
+            });
+        } else {
+            $(_this).next("select").html(html);
+        }
+    }
+
+
+    function addNew(_this) {
+        var ul = $(_this).parent();
+        if ($(_this).html() === '[+]') {
+            var newul = ul.clone(true);
+            newul.find('a').html('[-]');
+            newul.find('select[name="search_type_id[]"]').children('option:selected').removeProp('selected');
+            newul.find('select[name="search_attr_id[]"]').children('option:selected').removeProp('selected');
+            // 去掉属性值
+            newul.next("select").val("<option value=''>--请选择分类属性--</option>");
+            // 追加
+            ul.parent().append(newul);
+        } else {
+            ul.remove();
+        }
+    }
+
+    $(function () {
+        $("select[name='search_type_id[]']").children(':selected').each(function (k, v) {
+            change($(v).parent());
+        });
+    });
 </script>

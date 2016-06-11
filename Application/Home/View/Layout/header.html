@@ -100,14 +100,14 @@ $data = $model->getCateData();
 
                 <volist name="data" id="vo">
                     <div class="cat <if condition="$i eq 1">item1</if>">
-                        <h3><a href="">{$vo['cat_name']}</a> <b></b></h3>
+                    <h3><a href="{:U('/home/search/search',array('id'=>$vo['id']))}">{$vo['cat_name']}</a> <b></b></h3>
                         <div class="cat_detail">
                             <volist name="vo['children']" id="vo1">
                                 <dl class="dl_1st">
-                                    <dt><a href="">{$vo1['cat_name']}</a></dt>
+                                    <dt><a href="{:U('/home/search/search',array('id'=>$vo1['id']))}">{$vo1['cat_name']}</a></dt>
                                     <dd>
                                     <volist name="vo1['children']" id="vo2">
-                                        <a href="">{$vo2['cat_name']}</a>
+                                        <a href="{:U('/home/search/search',array('id'=>$vo2['id']))}">{$vo2['cat_name']}</a>
                                     </volist>
                                     </dd>
                                 </dl>

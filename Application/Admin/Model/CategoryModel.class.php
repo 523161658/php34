@@ -3,8 +3,8 @@ namespace Admin\Model;
 use Think\Model;
 class CategoryModel extends Model 
 {
-	protected $insertFields = array('cat_name','parent_id');
-	protected $updateFields = array('id','cat_name','parent_id');
+	protected $insertFields = array('cat_name','parent_id','search_attr_id');
+	protected $updateFields = array('id','cat_name','parent_id','search_attr_id');
 	protected $_validate = array(
         	array('cat_name', 'require', '分类名称不能为空！', 1, 'regex', 3),
 		array('cat_name', '1,30', '分类名称的值最长不能超过 30 个字符！', 1, 'length', 3),
@@ -85,5 +85,36 @@ class CategoryModel extends Model
                 }
             }
             return $data;
+        }
+        
+        /**
+         * 整理search_attr_id数据
+         */
+        protected function _before_insert(&$data, $options) {
+            $attr = array();
+            if(I('post.search_attr_id')){
+                foreach(I('post.search_attr_id') as $k=>$v){
+                    if($v != ''){
+                        $attr[] = $v;
+                    }
+                }
+            }
+            $data['search_attr_id'] = implode(',', $attr);
+        }
+        
+        /**
+         * 整理search_attr_id数据
+         * 更新操作
+         */
+        protected function _before_update(&$data, $options) {
+            $attr = array();
+            if(I('post.search_attr_id')){
+                foreach(I('post.search_attr_id') as $k=>$v){
+                    if($v != ''){
+                        $attr[] = $v;
+                    }
+                }
+            }
+            $data['search_attr_id'] = implode(',', $attr);
         }
 }

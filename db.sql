@@ -90,6 +90,7 @@ CREATE TABLE php34_category
 	id smallint unsigned not null auto_increment,
 	cat_name varchar(30) not null comment '分类名称',
 	parent_id smallint unsigned not null default '0' comment '上级分类的ID，0：代表顶级',
+        search_attr_id varchar(100) not null default '' comment '筛选选属性ID，多个ID用逗号隔开',
 	primary key (id)
 )engine=MyISAM default charset=utf8 comment '商品分类表';
 

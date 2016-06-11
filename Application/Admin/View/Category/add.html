@@ -2,19 +2,40 @@
 <div class="main-div">
     <form name="main_form" method="POST" action="__SELF__" enctype="multipart/form-data">
         <table cellspacing="1" cellpadding="3" width="100%">
-			<tr>
-				<td class="label">上级权限：</td>
-				<td>
-					<select name="parent_id">
-						<option value="0">顶级权限</option>
-						<?php foreach ($parentData as $k => $v): ?>						<option value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']).$v['cat_name']; ?></option>
-						<?php endforeach; ?>					</select>
-				</td>
-			</tr>
+            <tr>
+                <td class="label">上级权限：</td>
+                <td>
+                    <select name="parent_id">
+                        <option value="0">顶级权限</option>
+                        <?php foreach ($parentData as $k => $v): ?>
+                        <option value="<?php echo $v['id']; ?>"><?php echo str_repeat('-', 8*$v['level']).$v['cat_name']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </td>
+            </tr>
             <tr>
                 <td class="label">商品分类名称：</td>
                 <td>
                     <input  type="text" name="cat_name" value="" />
+                </td>
+            </tr>
+            <tr>
+                <td class="label">商品搜索属性：</td>
+                <td>
+                    <ul class="list">
+                        <li style="padding-bottom: 5px">
+                            <a href="javascript:void(0);" onclick="addNew($(this));" style="width:20px;float: left">[+]</a>
+                            <select name="search_type_id[]" onchange="change($(this))">
+                                <option value="">--请选择搜索分类--</option>
+                                <volist name="typeData" id="vo">
+                                    <option value="{$vo.id}">{$vo.type_name}</option>
+                                </volist>
+                            </select>
+                            <select name="search_attr_id[]">
+                                <option value="">--请选择分类属性--</option>
+                            </select>
+                        </li>
+                    </ul>
                 </td>
             </tr>
             <tr>
@@ -27,4 +48,38 @@
     </form>
 </div>
 <script>
+    function change(_this){
+        var typeId = $(_this).val();
+        var html = '<option value="">--请选择分类属性--</option>';
+        if(typeId !== ''){
+            $.ajax({
+                type: "get",
+                url: "{:U('getAttr','',false)}/typeId/" + typeId,
+                dataType: "json",
+                success: function(data){
+                    $(data).each(function (k,v){
+                        html += "<option value='"+v.id+"'>"+v['attr_name']+"</option>";
+                    });
+                    $(_this).next("select").html(html);
+                }
+            });
+        }else{
+            $(_this).next("select").html(html);
+        }
+    }
+    
+    
+    function addNew(_this){
+        var ul = $(_this).parent();
+        if($(_this).html() === '[+]'){
+            var newul = ul.clone(true);
+            newul.find('a').html('[-]');
+            // 去掉属性值
+            newul.next("select").val("<option value=''>--请选择分类属性--</option>");
+            // 追加
+            ul.parent().append(newul);
+        }else{
+            ul.remove();
+        }
+    }
 </script>

@@ -623,6 +623,12 @@ div#popMsg {
     text-decoration:none;
 }
 
+.list {
+    list-style-type:none;
+    margin: 0px;
+    padding: 0px;
+}
+
 a.special:link, a.special:visited{
     margin:0 5px;
     padding:1px 5px;
