@@ -84,6 +84,67 @@ class GoodsModel extends Model {
         $data['data'] = $this->alias('a')->field('a.*,ifnull(sum(b.goods_number),0) goods_number')->join('LEFT JOIN php34_goods_number b on a.id = b.goods_id')->where($where)->group('a.id')->limit($page->firstRow . ',' . $page->listRows)->select();
         return $data;
     }
+    
+    
+    /**
+     * 搜索商品
+     */
+    public function search_goods($pageSize = 20){
+        // 搜索条件
+        $where = array(
+            "a.is_delete"     =>  array('eq',0),
+            "a.is_on_sale"    =>  array('eq',1),
+        );
+        
+        if(I('get.price_section')){
+            $price_section = explode('-',I('get.price_section'));
+            if($price_section[1] == '以上'){
+                $where['a.shop_price']  =  array('gt',$price_section[0]);
+            }else{
+                $where['a.shop_price']  =  array('between',array($price_section[0],$price_section[1]));
+            }
+        }
+        
+        if(I('get.id')){
+            $goods_cat_model = M('GoodsCat');
+            $goods_ids = $goods_cat_model->field('GROUP_CONCAT(DISTINCT goods_id) str_ids')->where(array('cat_id'=>array('eq',I('get.id'))))->select();
+            $str_ids = $goods_ids['str_ids'];
+            if($str_ids){
+                $where['a.cat_id'] = array('exp',"=I('get.id') or a.id in ($str_ids)");
+            }else{
+                $where['a.cat_id'] = array('eq',I('get.id'));
+            }
+            
+            
+        }
+        
+        // 排序
+        $order_by = "sale_number";
+        $order_way = "desc";
+        $ob = I('get.ob');
+        if($ob!='' && in_array($ob, array('sale_number','shop_price','comment_number','addtime'))){
+            $order_by = $ob;
+            if($ob == 'shop_price' && I('get.ow')){
+                $order_way = I('get.ow');
+            }
+        }
+        
+        $order = $order_by . ' ' . $order_way;
+        
+        
+        // 翻页
+        $count = $this->alias('a')->where($where)->count();
+        $page = new \Think\Page($count, $pageSize);
+        // 配置翻页的样式
+        $page->setConfig('prev', '上一页');
+        $page->setConfig('next', '下一页');
+        $data['page'] = $page->show();
+        
+        // 取数据
+        $data['data'] = $this->alias('a')->field("a.id,a.goods_name,a.shop_price,a.sm_logo,IFNULL(SUM(b.goods_number),0) sale_number,(SELECT COUNT(id) FROM php34_comment c WHERE c.goods_id = a.id) comment_number")->join("LEFT JOIN php34_order_goods b
+    	on a.id = b.goods_id")->where($where)->group('a.id')->order($order)->limit($page->firstRow . ',' . $page->listRows)->select();
+        return $data;
+    }
 
     // 添加前
     protected function _before_insert(&$data, $option) {

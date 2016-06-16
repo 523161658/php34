@@ -2,6 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/Users/dongjc/Documents/php34/Application/Common/Common/function.php</file>
+            <file>file:/Users/dongjc/Documents/php34/Application/Admin/Model/GoodsModel.class.php</file>
+            <file>file:/Users/dongjc/Documents/php34/Application/Runtime/Cache/Home/dc21e6da2e1dbcec494898213c16ba46.php</file>
+            <file>file:/Users/dongjc/Documents/php34/Application/Home/View/Search/search.html</file>
+            <file>file:/Users/dongjc/Documents/php34/Application/Home/Controller/SearchController.class.php</file>
+        </group>
     </open-files>
 </project-private>
